@@ -47,7 +47,7 @@ module.exports = {
     plugins: (function(){
         var plugins = [];
 
-        if (isDebug) {
+        if (!isDebug) {
             plugins = plugins.concat([
                 // Минификация скриптов.
                 new webpack.optimize.UglifyJsPlugin({

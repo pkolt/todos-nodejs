@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block styles %}
+    {{ super() }}
+    <link rel="stylesheet" href="/static/todos/dist/index.css">
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script src="/static/todos/dist/index.js" async></script>
+{% endblock %}
+
+{% block title %}Список дел{% endblock %}
+
+{% block content %}
+    <div id="root"></div>
+{% endblock %}

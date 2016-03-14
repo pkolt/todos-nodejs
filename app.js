@@ -3,6 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const nunjucks = require('express-nunjucks');
 const morgan = require('morgan');
+const helmet = require('helmet');
 const mongoose = require('mongoose');
 const todos = require('./todos');
 const app = express();
@@ -34,6 +35,8 @@ nunjucks.setup({
     watch: true
 }, app);
 
+app.use(helmet());
+
 const logStream = fs.createWriteStream(__dirname + '/logs/errors.log', {flags: 'a'});
 
 // Подключаем логгирование.
@@ -63,7 +66,7 @@ app.use(function (err, req, res, next) {
         };
 
         if (req.xhr) {
-            res.status(500).send(data);
+            res.status(500).json(data);
         } else {
             res.status(500).render('500', data);
         }

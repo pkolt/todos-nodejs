@@ -10,6 +10,7 @@
 
 ```bash
 cp example.todos-nodejs.sh todos-nodejs.sh
+chmod +x todos-nodejs.sh
 ```
 
 В файле `todos-nodejs.sh` указываем путь к папке проекта.

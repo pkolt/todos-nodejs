@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "pm2 start server.js --name=\"todos-nodejs\" --instances 0 --watch",
-    "stop": "pm2 delete todos-nodejs",
+    "stop": "pm2 stop todos-nodejs",
     "restart": "pm2 restart todos-nodejs",
     "build:dev": "webpack",
     "build:prod": "NODE_ENV=production webpack"

@@ -29,7 +29,7 @@ export function requestPosts() {
 export function addTodo(text) {
     return dispatch => {
         dispatch({type: REQUEST_ADD_TODO, text});
-        return fetch('/todo', {
+        return fetch('/todos', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -42,12 +42,8 @@ export function addTodo(text) {
 export function deleteTodo(id) {
     return dispatch => {
         dispatch({type: REQUEST_DELETE_TODO, id});
-        return fetch('/todo', {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({id: id})
+        return fetch('/todos/' + id, {
+            method: 'DELETE'
         }).then(res => res.json()).then(() => dispatch({type: RECEIVE_DELETE_TODO, id}));
     }
 }
@@ -59,12 +55,12 @@ export function completeTodo(id) {
         const state = getState();
         const todo = state.todos.filter(todo => todo.id === id)[0];
         
-        return fetch('/todo', {
+        return fetch('/todos/' + id + '/completed', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({id: id, completed: !todo.completed})
+            body: JSON.stringify({completed: !todo.completed})
         }).then(res => res.json()).then(todo => dispatch({type: RECEIVE_COMPLETE_TODO, id, todo}));
     }
 }

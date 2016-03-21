@@ -1,10 +1,13 @@
+'use strict';
+
 const fs = require('fs');
 const nunjucks = require('nunjucks');
 const mongoose = require('mongoose');
-const todos = require('./todos');
 const koa = require('koa');
 const mount = require('koa-mount');
 const serve = require('koa-static');
+const minify = require('html-minifier').minify;
+const todos = require('./todos');
 const app = koa();
 
 // Флаг режима разработки. По-умолчанию всегда запускается в режиме разработки.
@@ -13,21 +16,17 @@ const isDebug = app.env === 'development';
 const mongodbURI = 'mongodb://localhost/todos';
 mongoose.connect(mongodbURI);
 
-const render = (function() {
+const render = (ctx) => (name, data) => {
     const paths = [
         __dirname + '/templates',
         __dirname + '/todos/templates'
     ];
     const loader = new nunjucks.FileSystemLoader(paths);
     const env = new nunjucks.Environment(loader);
-    
-    return function(ctx) {
-        return function(name, data) {
-            ctx.type = 'html';
-            ctx.body = env.render(name, data);
-        }
-    }
-})();
+
+    ctx.type = 'html';
+    ctx.body = env.render(name, data);
+};
 
 const logStream = fs.createWriteStream(__dirname + '/logs/errors.log', {flags: 'a'});
 
@@ -42,6 +41,23 @@ app.on('error', function(err, ctx) {
 app.use(function *(next) {
     this.render = render(this);
     yield next;
+});
+
+// Минификация html.
+app.use(function *(next){
+    yield next;
+
+    if (!this.response.is('html')) return;
+
+    var body = this.body;
+    if (!body || body.pipe) return;
+
+    if (Buffer.isBuffer(body)) {
+        body = body.toString();
+    }
+    this.body = minify(body, {
+        collapseWhitespace: true
+    });
 });
 
 // Обработка 404 ошибки.

@@ -1,6 +1,6 @@
 # Todos на NodeJS
 
-Простое приложение со списком дел с использованием связки React+Redux+MongoDB+Express
+Простое приложение со списком дел с использованием связки React+Redux+MongoDB+Koa
 
 ## Конфигурация Nginx
 

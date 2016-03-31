@@ -2,6 +2,32 @@
 
 Простое приложение со списком дел с использованием связки React+Redux+MongoDB+Koa
 
+## Обновление модулей проекта
+
+Установка утилиты:
+
+```bash
+npm install -g npm-check-updates
+```
+
+Проверить какие модули NPM нуждаются в обновлении:
+
+```bash
+ncu -u
+```
+
+Вносит изменения в package.json проставляя новые версии модулей:
+
+```bash
+ncu -a
+```
+
+Обновление модулей NPM:
+
+```bash
+npm update
+```
+
 ## Конфигурация Nginx
 
 ## Автозапуск приложения при старте системы
@@ -57,4 +83,18 @@ sudo service todos-nodejs stop
 
 # Перезапуск службы
 sudo service todos-nodejs restart
+```
+
+## Сборка проекта
+
+Для разработки:
+
+```bash
+npm run build --production
+```
+
+Для производства:
+
+```bash
+npm run build --production
 ```

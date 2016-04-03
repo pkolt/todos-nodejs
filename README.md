@@ -90,7 +90,7 @@ sudo service todos-nodejs restart
 Для разработки:
 
 ```bash
-npm run build --production
+npm run build
 ```
 
 Для производства:

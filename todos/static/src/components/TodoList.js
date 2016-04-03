@@ -4,6 +4,10 @@ import Todo from './Todo';
 
 
 class TodoList extends Component {
+    componentDidMount() {
+        this.props.loadTodos();
+    }
+
     render() {
         return (
             <Table>
@@ -22,6 +26,7 @@ class TodoList extends Component {
 }
 
 TodoList.propTypes = {
+    loadTodos: PropTypes.func.isRequired,
     completeTodo: PropTypes.func.isRequired,
     deleteTodo: PropTypes.func.isRequired,
     todos: PropTypes.arrayOf(PropTypes.shape({

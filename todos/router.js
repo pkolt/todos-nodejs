@@ -5,6 +5,10 @@ const Todo = require('./models').Todo;
 const router = require('koa-router')();
 
 
+function* index() {
+    this.render('todos/index.html');
+}
+
 function* list() {
     this.body = yield Todo.find({}).exec();
 }
@@ -39,9 +43,7 @@ function* completed() {
 }
 
 router
-    .get('/', function*() {
-        this.render('todos/index.html');
-    })
+    .get('/', index)
     .get('/todos', list)
     .post('/todos', add)
     .del('/todos/:id', del)

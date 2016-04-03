@@ -1,17 +1,17 @@
 import {combineReducers} from 'redux';
-import {FILTERS, RECEIVE_ADD_TODO, RECEIVE_DELETE_TODO, RECEIVE_COMPLETE_TODO, RECEIVE_TODOS, FILTER_TODO} from './actions';
+import {FILTERS, LOAD_TODOS_SUCCESS, ADD_TODO_SUCCESS, DELETE_TODO_SUCCESS, COMPLETE_TODO_SUCCESS, FILTER_TODO} from './actions';
 
 
 function todos(state=[], action) {
     switch (action.type) {
-        case RECEIVE_ADD_TODO:
-            return [...state, action.todo];
-        case RECEIVE_DELETE_TODO:
-            return state.filter(obj => obj.id !== action.id);
-        case RECEIVE_COMPLETE_TODO:
-            return state.map(todo => todo.id === action.id ? action.todo : todo);
-        case RECEIVE_TODOS:
+        case LOAD_TODOS_SUCCESS:
             return Object.assign([], action.todos);
+        case ADD_TODO_SUCCESS:
+            return [...state, action.todo];
+        case DELETE_TODO_SUCCESS:
+            return state.filter(obj => obj.id !== action.id);
+        case COMPLETE_TODO_SUCCESS:
+            return state.map(todo => todo.id === action.id ? action.todo : todo);
         default:
             return state;
     }

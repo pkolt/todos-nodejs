@@ -10,7 +10,7 @@ import {Grid, Panel} from 'react-bootstrap';
 import AddTodo from '../components/AddTodo';
 import TodoList from '../components/TodoList';
 import Footer from '../components/Footer';
-import {addTodo, deleteTodo, completeTodo, filterTodo, FILTERS} from '../actions';
+import {loadTodos, addTodo, deleteTodo, completeTodo, filterTodo, FILTERS} from '../actions';
 
 
 class App extends Component {
@@ -29,6 +29,7 @@ class App extends Component {
                     />
                     <TodoList
                         todos={todos}
+                        loadTodos={() => dispatch(loadTodos())}
                         completeTodo={id => dispatch(completeTodo(id))}
                         deleteTodo={id => dispatch(deleteTodo(id))}
                     />

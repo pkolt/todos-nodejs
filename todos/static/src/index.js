@@ -7,7 +7,6 @@ import {Provider} from 'react-redux';
 import {createStore, applyMiddleware} from 'redux';
 import thunk from 'redux-thunk';
 import rootReducer from './reducers';
-import {requestPosts} from './actions';
 import App from './containers/App';
 
 // Логгирование действий.
@@ -29,8 +28,6 @@ const crashReporter = store => next => action => {
 };
 
 const store = createStore(rootReducer, applyMiddleware(thunk, logger, crashReporter));
-
-store.dispatch(requestPosts());
 
 ReactDOM.render(
     <Provider store={store}>

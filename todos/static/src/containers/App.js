@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap-theme.css';
 
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
+import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
 import {Grid, Panel} from 'react-bootstrap';
@@ -10,28 +11,29 @@ import {Grid, Panel} from 'react-bootstrap';
 import AddTodo from '../components/AddTodo';
 import TodoList from '../components/TodoList';
 import Footer from '../components/Footer';
-import {loadTodos, addTodo, deleteTodo, completeTodo, filterTodo, FILTERS} from '../actions';
+import {actionCreators, FILTERS} from '../actions';
 
 
 class App extends Component {
     render() {
         const {dispatch, todos, filter} = this.props;
+        const boundActionCreators = bindActionCreators(actionCreators, dispatch);
         const footer = <Footer
             filter={filter}
-            onFilterChange={filter => dispatch(filterTodo(filter))}
+            onFilterChange={boundActionCreators.filterTodo}
         />;
         return (
             <Grid>
                 <h1>Список дел</h1>
                 <Panel footer={footer}>
                     <AddTodo
-                        addTodo={text => dispatch(addTodo(text))}
+                        addTodo={boundActionCreators.addTodo}
                     />
                     <TodoList
                         todos={todos}
-                        loadTodos={() => dispatch(loadTodos())}
-                        completeTodo={id => dispatch(completeTodo(id))}
-                        deleteTodo={id => dispatch(deleteTodo(id))}
+                        loadTodos={boundActionCreators.loadTodos}
+                        completeTodo={boundActionCreators.completeTodo}
+                        deleteTodo={boundActionCreators.deleteTodo}
                     />
                 </Panel>
             </Grid>

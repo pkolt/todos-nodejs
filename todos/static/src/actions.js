@@ -91,3 +91,11 @@ export function completeTodo(id) {
 export function filterTodo(filter) {
     return {type: FILTER_TODO, filter};
 }
+
+export const actionCreators = {
+    loadTodos,
+    addTodo,
+    deleteTodo,
+    completeTodo,
+    filterTodo
+};

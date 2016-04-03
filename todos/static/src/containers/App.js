@@ -11,7 +11,8 @@ import {Grid, Panel} from 'react-bootstrap';
 import AddTodo from '../components/AddTodo';
 import TodoList from '../components/TodoList';
 import Footer from '../components/Footer';
-import {actionCreators, FILTERS} from '../actions';
+import {actionCreators} from '../actions';
+import {filterTodos} from '../selectors';
 
 
 class App extends Component {
@@ -41,22 +42,11 @@ class App extends Component {
     }
 }
 
-function selectTodos(todos, filter) {
-    switch (filter) {
-        case FILTERS.SHOW_ALL:
-            return todos;
-        case FILTERS.SHOW_COMPLETED:
-            return todos.filter(todo => todo.completed);
-        case FILTERS.SHOW_ACTIVE:
-            return todos.filter(todo => !todo.completed);
-    }
-}
-
-function select(state) {
+const mapStateToProps = (state) => {
     return {
-        todos: selectTodos(state.todos, state.filter),
+        todos: filterTodos(state),
         filter: state.filter
-    }
-}
+    };
+};
 
-export default connect(select)(App);
+export default connect(mapStateToProps)(App);

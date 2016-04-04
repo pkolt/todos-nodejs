@@ -13,9 +13,13 @@ class Todo extends Component {
 
     render() {
         const textStyle = {
-            width:'100%',
+            width: '100%',
             textDecoration: this.props.completed ? 'line-through' : 'none',
             color: this.props.completed ? '#ccc' : '#000',
+            cursor: 'pointer'
+        };
+
+        const deleteButtonStyle = {
             cursor: 'pointer'
         };
 
@@ -25,7 +29,7 @@ class Todo extends Component {
                     {this.props.text}
                 </td>
                 <td>
-                    <Glyphicon glyph="trash" title="Удалить" style={{cursor: 'pointer'}} onClick={e => this.handlerDeleteTodo(e)}/>
+                    <Glyphicon glyph="trash" title="Удалить" style={deleteButtonStyle} onClick={e => this.handlerDeleteTodo(e)}/>
                 </td>
             </tr>
         )

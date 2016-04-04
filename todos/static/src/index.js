@@ -28,10 +28,11 @@ const crashReporter = store => next => action => {
 };
 
 const store = createStore(rootReducer, applyMiddleware(thunk, logger, crashReporter));
+const rootNode = document.getElementById('root');
 
 ReactDOM.render(
     <Provider store={store}>
         <App/>
     </Provider>,
-    document.getElementById('root')
+    rootNode
 );

@@ -8,6 +8,10 @@ class TodoList extends Component {
         this.props.loadTodos();
     }
 
+    componentWillUnmount() {
+        // Здесь нужно отменить запрос при размонтировании компонента.
+    }
+
     render() {
         return (
             <Table>

@@ -15,31 +15,39 @@ function* list() {
 
 function* add() {
     const body = yield parse(this);
-    this.body = yield Todo.create({
-        text: body.text
-    });
+    try {
+        this.body = yield Todo.create({text: body.text});
+    } catch (err) {
+        this.status = 400;
+        this.body = {message: err.message};
+        this.app.emit('error', err, this);
+    }
 }
 
 function* del() {
     const id = this.params.id;
-    if (!id) {
-        throw new Error('Не задан параметр id: ' + id);
+    try {
+        this.body = yield Todo.remove({_id: id});
+    } catch (err) {
+        this.status = 400;
+        this.body = {message: err.message};
+        this.app.emit('error', err, this);
     }
-    this.body = yield Todo.remove({_id: id});
 }
 
 function* completed() {
     const body = yield parse(this);
     const id = this.params.id;
     const completed = body.completed;
-
-    if (!id) {
-        throw new Error('Не задан параметр id: ' + id);
+    
+    try {
+        yield Todo.update({_id: id}, {completed: completed});
+        this.body = {};
+    } catch (err) {
+        this.status = 400;
+        this.body = {message: err.message};
+        this.app.emit('error', err, this);
     }
-
-    this.body = yield  Todo.update({_id: id}, {completed: completed}).then(function() {
-        return Todo.findOne({_id: id});
-    });
 }
 
 router

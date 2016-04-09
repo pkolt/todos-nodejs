@@ -49,8 +49,15 @@ export function addTodo(text) {
             },
             body: JSON.stringify({text: text})
         })
-            .then(res => res.json())
-            .then(todo => dispatch({type: ADD_TODO_SUCCESS, todo}))
+            .then(res => {
+                res.json().then(data => {
+                    if (res.status === 200) {
+                        dispatch({type: ADD_TODO_SUCCESS, todo: data});
+                    } else {
+                        dispatch({type: ADD_TODO_FAILURE, error: data});
+                    }
+                });
+            })
             .catch(error => dispatch({type: ADD_TODO_FAILURE, error}));
     }
 }
@@ -62,8 +69,15 @@ export function deleteTodo(id) {
         return fetch(`/todos/${id}`, {
             method: 'DELETE'
         })
-            .then(res => res.json())
-            .then(() => dispatch({type: DELETE_TODO_SUCCESS, id}))
+            .then(res => {
+                res.json().then(data => {
+                    if (res.status === 200) {
+                        dispatch({type: DELETE_TODO_SUCCESS, id});
+                    } else {
+                        dispatch({type: DELETE_TODO_FAILURE, error: data});
+                    }
+                });
+            })
             .catch(error => dispatch({type: DELETE_TODO_FAILURE, error}));
     }
 }
@@ -74,16 +88,24 @@ export function completeTodo(id) {
         
         const state = getState();
         const todo = state.todos.filter(todo => todo.id === id)[0];
+        const completed = !todo.completed;
         
         return fetch(`/todos/${id}/completed`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({completed: !todo.completed})
+            body: JSON.stringify({completed: completed})
         })
-            .then(res => res.json())
-            .then(todo => dispatch({type: COMPLETE_TODO_SUCCESS, id, todo}))
+            .then(res => {
+                res.json().then(data => {
+                    if (res.status === 200) {
+                        dispatch({type: COMPLETE_TODO_SUCCESS, id, completed})
+                    } else {
+                        dispatch({type: COMPLETE_TODO_FAILURE, error: data})
+                    }
+                });
+            })
             .catch(error => dispatch({type: COMPLETE_TODO_FAILURE, error}));
     }
 }

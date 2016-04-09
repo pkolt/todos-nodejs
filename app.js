@@ -65,19 +65,20 @@ app.use(function *(next) {
     yield next;
 
     if (this.status !== 404) return;
-
+    
+    const message = 'Page Not Found';
     switch (this.accepts('html', 'json')) {
         case 'html':
             this.render('404.html');
             break;
         case 'json':
             this.body = {
-                message: 'Page Not Found'
+                message: message
             };
             break;
         default:
             this.type = 'text';
-            this.body = 'Page Not Found';
+            this.body = message;
     }
 });
 

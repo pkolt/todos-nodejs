@@ -11,7 +11,7 @@ function todos(state=[], action) {
         case DELETE_TODO_SUCCESS:
             return state.filter(obj => obj.id !== action.id);
         case COMPLETE_TODO_SUCCESS:
-            return state.map(todo => todo.id === action.id ? action.todo : todo);
+            return state.map(todo => todo.id === action.id ? Object.assign({}, todo, {completed: action.completed}) : todo);
         default:
             return state;
     }

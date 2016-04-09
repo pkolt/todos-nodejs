@@ -13,16 +13,15 @@
   "author": "Pavel Koltyshev <pkoltyshev@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "co": "^4.6.0",
     "co-body": "^4.0.0",
     "html-minifier": "^1.4.0",
     "koa": "^1.2.0",
     "koa-mount": "^1.3.0",
     "koa-router": "^5.4.0",
     "koa-static": "^2.0.0",
-    "mongoose": "^4.4.10",
+    "mongoose": "^4.4.12",
     "nunjucks": "^2.4.1",
-    "pm2": "^1.0.2"
+    "pm2": "^1.1.1"
   },
   "devDependencies": {
     "babel-loader": "^6.2.4",
@@ -33,14 +32,13 @@
     "css-loader": "^0.23.1",
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.8.5",
-    "react": "^0.14.8",
-    "react-bootstrap": "^0.28.4",
-    "react-dom": "^0.14.8",
-    "react-redux": "^4.4.1",
-    "redux": "^3.3.1",
+    "react": "^15.0.1",
+    "react-bootstrap": "^0.28.5",
+    "react-dom": "^15.0.1",
+    "react-redux": "^4.4.2",
+    "redux": "^3.4.0",
     "redux-thunk": "^2.0.1",
-    "reselect": "^2.2.1",
-    "style-loader": "^0.13.1",
+    "reselect": "^2.3.0",
     "webpack": "^1.12.14",
     "whatwg-fetch": "^0.11.0"
   }

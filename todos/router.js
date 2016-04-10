@@ -14,13 +14,12 @@ function* list() {
 }
 
 function* add() {
-    const body = yield parse(this);
     try {
+        const body = yield parse(this);
         this.body = yield Todo.create({text: body.text});
     } catch (err) {
         this.status = 400;
         this.body = {message: err.message};
-        this.app.emit('error', err, this);
     }
 }
 
@@ -31,22 +30,19 @@ function* del() {
     } catch (err) {
         this.status = 400;
         this.body = {message: err.message};
-        this.app.emit('error', err, this);
     }
 }
 
 function* completed() {
-    const body = yield parse(this);
-    const id = this.params.id;
-    const completed = body.completed;
-    
     try {
+        const id = this.params.id;
+        const body = yield parse(this);
+        const completed = body.completed;
         yield Todo.update({_id: id}, {completed: completed});
         this.body = {};
     } catch (err) {
         this.status = 400;
         this.body = {message: err.message};
-        this.app.emit('error', err, this);
     }
 }
 

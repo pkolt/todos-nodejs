@@ -1,56 +1,61 @@
 'use strict';
 
-const parse = require('co-body');
 const Todo = require('./models').Todo;
-const router = require('koa-router')();
+const express = require('express');
+const router = express.Router();
 
 
-function* index() {
-    this.render('todos/index.html');
+function index(req, res) {
+    res.render('todos/index.html');
 }
 
-function* list() {
-    this.body = yield Todo.find({}).exec();
+function list(req, res) {
+    Todo.find({}).exec().then(function(data) {
+        res.send(data);
+    });
 }
 
-function* add() {
-    try {
-        const body = yield parse(this);
-        this.body = yield Todo.create({text: body.text});
-    } catch (err) {
-        this.status = 400;
-        this.body = {message: err.message};
-    }
+function add(req, res) {
+    const body = req.body;
+
+    Todo.create({text: body.text})
+        .then(function(data) {
+            res.json(data);
+        }).catch(function(err) {
+            res.status(400).json({message: err.message});
+        });
 }
 
-function* del() {
-    const id = this.params.id;
-    try {
-        this.body = yield Todo.remove({_id: id});
-    } catch (err) {
-        this.status = 400;
-        this.body = {message: err.message};
-    }
+function del(req, res) {
+    const id = req.params.id;
+
+    Todo.remove({_id: id})
+        .then(function(data) {
+            res.json(data);
+        })
+        .catch(function(err) {
+            res.status(400).json({message: err.message});
+        });
 }
 
-function* completed() {
-    try {
-        const id = this.params.id;
-        const body = yield parse(this);
-        const completed = body.completed;
-        yield Todo.update({_id: id}, {completed: completed});
-        this.body = {};
-    } catch (err) {
-        this.status = 400;
-        this.body = {message: err.message};
-    }
+function completed(req, res) {
+    const id = req.params.id;
+    const completed = req.body.completed;
+
+    Todo.update({_id: id}, {completed: completed})
+        .then(function() {
+            res.json({});
+        })
+        .catch(function(err) {
+            res.status(400).json({message: err.message});
+        });
 }
 
 router
     .get('/', index)
     .get('/todos', list)
     .post('/todos', add)
-    .del('/todos/:id', del)
+    .delete('/todos/:id', del)
     .put('/todos/:id/completed', completed);
 
 module.exports = router;

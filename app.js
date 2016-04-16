@@ -3,6 +3,7 @@
 const fs = require('fs');
 const express = require('express');
 const nunjucks = require('nunjucks');
+const nunjucksAsyncLoader = require('nunjucks-async-loader');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const todosRouter = require('./todos/router');
@@ -34,8 +35,16 @@ app.use(bodyParser.json());
         __dirname + '/templates',
         __dirname + '/todos/templates'
     ];
-    const loader = new nunjucks.FileSystemLoader(paths);
+
+    const loader = new nunjucksAsyncLoader(paths, {
+        // Перезагружать шаблоны при изменении.
+        watch: isDev,
+        // Не использовать кеш, перекомпилировать шаблоны каждый раз.
+        noCache: isDev
+    });
+
     const env = new nunjucks.Environment(loader);
+
     env.express(app);
 })();
 

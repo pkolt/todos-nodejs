@@ -17,7 +17,7 @@
     "express": "^5.0.0-alpha.2",
     "mongoose": "^4.4.12",
     "nunjucks": "^2.4.2",
-    "nunjucks-async-loader": "^0.1.2",
+    "nunjucks-async-loader": "^1.0.0",
     "pm2": "^1.1.2"
   },
   "devDependencies": {
@@ -30,12 +30,12 @@
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.8.5",
     "react": "^15.0.1",
-    "react-bootstrap": "^0.28.5",
+    "react-bootstrap": "^0.29.0",
     "react-dom": "^15.0.1",
     "react-redux": "^4.4.5",
-    "redux": "^3.4.0",
+    "redux": "^3.5.1",
     "redux-thunk": "^2.0.1",
-    "reselect": "^2.3.0",
+    "reselect": "^2.4.0",
     "webpack": "^1.13.0",
     "whatwg-fetch": "^0.11.0"
   }

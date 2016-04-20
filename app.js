@@ -11,7 +11,7 @@ const todosRouter = require('./todos/router');
 const app = express();
 
 // Флаг режима разработки. По-умолчанию всегда запускается в режиме разработки 'development'.
-const isDev = app.get('env');
+const isDev = app.get('env') === 'development';
 
 const mongodbURI = 'mongodb://localhost/todos';
 mongoose.connect(mongodbURI);
@@ -21,9 +21,6 @@ const logStream = fs.createWriteStream(__dirname + '/logs/errors.log', {flags: '
 
 // Убрать "X-Powered-By: Express" из заголовка.
 app.set('x-powered-by', false);
-
-// parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({extended: false}));
 
 // parse application/json
 app.use(bodyParser.json());
